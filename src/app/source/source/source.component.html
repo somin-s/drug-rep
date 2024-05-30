@@ -1,0 +1,39 @@
+<mat-drawer-container #containerChart id = "containerChart" class="example-container" [hasBackdrop]="false">
+  <mat-table matSort [dataSource] = "dataSources">
+    <ng-container matColumnDef="sourceID">
+        <mat-header-cell *matHeaderCellDef>sourceID</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.sourceID}}</mat-cell>
+  </ng-container>
+    
+  <ng-container matColumnDef="nameLabel">
+        <mat-header-cell *matHeaderCellDef>nameLabel</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.nameLabel}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef >description</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.description}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="UCICount">
+      <mat-header-cell *matHeaderCellDef>UCICount</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.UCICount}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="srcUrl">
+    <mat-header-cell *matHeaderCellDef>srcUrl</mat-header-cell>
+    <mat-cell *matCellDef="let element">{{element.srcUrl}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns:displayedColumns;"></mat-row>
+
+    <ng-container matColumnDef="Options">
+        <mat-header-cell *matHeaderCellDef>Options</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" (click)="onClick(element.srcUrl)">
+              <mat-icon>link</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
+
+    </mat-table>
+</mat-drawer-container>
+

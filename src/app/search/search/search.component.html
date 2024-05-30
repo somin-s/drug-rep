@@ -1,0 +1,59 @@
+
+<div>
+    <mat-form-field>
+        <mat-label>UCI (e.g. 101999991 )</mat-label>
+        <input matInput>  
+    </mat-form-field>
+    <button mat-raised-button (click) = "onSearch()" color="primary">UCI Search</button>
+</div>
+<div>
+    <mat-card>
+        <mat-card-header>
+                    UCI: {{uci}}
+        </mat-card-header>
+        <mat-card-content>
+            <img  class="map-frame" [src] ="image" style="width: 300px;height: 200px;"> 
+        </mat-card-content>
+        <mat-card-content> InchiKey: {{standardInchiKey}} </mat-card-content>
+    </mat-card>
+</div>
+
+<mat-table matSort [dataSource] = "dataSource">
+    <ng-container matColumnDef="compoundId">
+        <mat-header-cell *matHeaderCellDef >compoundId</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.compoundId}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef >id</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="longName">
+        <mat-header-cell *matHeaderCellDef >longName</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.longName}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="url">
+        <mat-header-cell *matHeaderCellDef >url</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{element.url}}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns:displayedColumns;"></mat-row>
+
+    <ng-container matColumnDef="Link">
+    <mat-header-cell *matHeaderCellDef>Link</mat-header-cell>
+    <mat-cell *matCellDef="let row">
+        <button mat-icon-button color="warn" (click)="onClick(row.url)">
+          <mat-icon>link</mat-icon>
+        </button>
+    </mat-cell>
+    </ng-container>
+    </mat-table>
+
+    <ng-container matColumnDef="Options">
+        <mat-header-cell *matHeaderCellDef>Options</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <button mat-icon-button color="warn" (click)="onClick(element.srcUrl)">
+              <mat-icon>link</mat-icon>
+            </button>
+        </mat-cell>
+    </ng-container>
