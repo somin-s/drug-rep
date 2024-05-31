@@ -68829,23 +68829,9 @@ var MatPaginatorModule = _MatPaginatorModule;
 
 // src/app/service/service.service.ts
 var _ServiceService = class _ServiceService {
-  // const headers= new HttpHeaders().set('content-type', 'application/json')
-  // .set('Access-Control-Allow-Origin', '*')
-  // .set('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS')
-  // .set('Access-Control-Allow-Headers','Origin, Content-Type, X-Auth-Token');
-  //readonly APIUrl: string | undefined;
-  //private APIUrl = environment.APIUrl
   constructor(http) {
     this.http = http;
   }
-  //#region for Metadata
-  // getMetadata(): Observable<Metadata[]> {
-  //   const headers= new HttpHeaders().set('content-type', 'application/json')
-  //   .set('Access-Control-Allow-Origin', '*')
-  //   .set('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS')
-  //   .set('Access-Control-Allow-Headers','Origin, Content-Type, X-Auth-Token');
-  //   return this.http.get<Metadata[]>(this.APIUrl+'Members',{headers: headers, withCredentials: true})
-  // }
   getCompound(compound) {
     return this.http.post("https://www.ebi.ac.uk/unichem/api/v1/compounds", compound);
   }
@@ -73317,8 +73303,10 @@ var _SearchComponent = class _SearchComponent {
   }
   refreshList() {
     this.service.getCompound(this.searchCompound).subscribe((data) => {
-      console.log(data);
       const values = Object.values(data);
+      if (values.length == 2) {
+        this.alarmMsg();
+      }
       const compound = Object.values(values[0]);
       const compoundDetail = Object.values(compound[0]);
       const sources = compoundDetail[1];
@@ -73334,7 +73322,15 @@ var _SearchComponent = class _SearchComponent {
   getImage(Urluci) {
     this.image = "https://www.ebi.ac.uk/unichem/api/v1/images/" + Urluci;
   }
+  alarmMsg() {
+    alert("You might input wrong UCI number");
+  }
   onSearch() {
+    if (document.getElementById("compound").value != "") {
+      this.searchCompound["compound"] = document.getElementById("compound").value;
+      this.refreshList();
+    } else
+      this.alarmMsg();
   }
   onClick(url) {
     window.open(url, "_blank");
@@ -73353,10 +73349,10 @@ _SearchComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type:
     \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.paginator = _t.first);
     \u0275\u0275queryRefresh(_t = \u0275\u0275loadQuery()) && (ctx.sort = _t.first);
   }
-}, decls: 36, vars: 6, consts: [["matInput", ""], ["mat-raised-button", "", "color", "primary", 3, "click"], [1, "map-frame", 2, "width", "300px", "height", "200px", 3, "src"], ["matSort", "", 3, "dataSource"], ["matColumnDef", "compoundId"], [4, "matHeaderCellDef"], [4, "matCellDef"], ["matColumnDef", "id"], ["matColumnDef", "longName"], ["matColumnDef", "url"], [4, "matHeaderRowDef"], [4, "matRowDef", "matRowDefColumns"], ["matColumnDef", "Link"], ["matColumnDef", "Options"], ["mat-icon-button", "", "color", "warn", 3, "click"]], template: function SearchComponent_Template(rf, ctx) {
+}, decls: 36, vars: 6, consts: [["matInput", "", "type", "text", "id", "compound", "name", "compound"], ["mat-raised-button", "", "color", "primary", 3, "click"], [1, "map-frame", 2, "width", "300px", "height", "200px", 3, "src"], ["matSort", "", 3, "dataSource"], ["matColumnDef", "compoundId"], [4, "matHeaderCellDef"], [4, "matCellDef"], ["matColumnDef", "id"], ["matColumnDef", "longName"], ["matColumnDef", "url"], [4, "matHeaderRowDef"], [4, "matRowDef", "matRowDefColumns"], ["matColumnDef", "Link"], ["matColumnDef", "Options"], ["mat-icon-button", "", "color", "warn", 3, "click"]], template: function SearchComponent_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "div")(1, "mat-form-field")(2, "mat-label");
-    \u0275\u0275text(3, "UCI (e.g. 101999991 )");
+    \u0275\u0275text(3, "UCI (e.g. 1000 )");
     \u0275\u0275elementEnd();
     \u0275\u0275element(4, "input", 0);
     \u0275\u0275elementEnd();
@@ -73414,7 +73410,7 @@ _SearchComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type:
 }, dependencies: [MatFormField, MatLabel, MatTable, MatHeaderCellDef, MatHeaderRowDef, MatColumnDef, MatCellDef, MatRowDef, MatHeaderCell, MatCell, MatHeaderRow, MatRow, MatIcon, MatButton, MatIconButton, MatCard, MatCardContent, MatCardHeader, MatInput, MatSort], styles: ["\n\n.example-container[_ngcontent-%COMP%] {\n  width: 1440px;\n  height: 900px;\n  margin: 12px;\n  border: 1px solid #FFF;\n}\n.example-card[_ngcontent-%COMP%] {\n  max-width: 400px;\n}\n.container[_ngcontent-%COMP%] {\n  display: flex;\n  flex-wrap: wrap;\n}\n.container[_ngcontent-%COMP%]    > *[_ngcontent-%COMP%] {\n  flex: 1 1 300px;\n}\n/*# sourceMappingURL=search.component.css.map */"] });
 var SearchComponent = _SearchComponent;
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SearchComponent, { className: "SearchComponent", filePath: "src\\app\\search\\search\\search.component.ts", lineNumber: 13 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SearchComponent, { className: "SearchComponent", filePath: "src\\app\\search\\search\\search.component.ts", lineNumber: 15 });
 })();
 
 // src/app/source/source/source.component.ts
@@ -73630,7 +73626,7 @@ var _AppComponent = class _AppComponent {
 _AppComponent.\u0275fac = function AppComponent_Factory(t) {
   return new (t || _AppComponent)();
 };
-_AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], decls: 18, vars: 0, consts: [["color", "primary"], ["fxFlex", "", "fxLayout", "", "fxLayoutAlign", "left", "fxHide.xs", ""], ["mat-menu-item", ""], [1, "icon"], [1, "label"], ["color", "accent"], ["label", "Search"], ["label", "Source"], ["label", "About author"]], template: function AppComponent_Template(rf, ctx) {
+_AppComponent.\u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _AppComponent, selectors: [["app-root"]], decls: 18, vars: 0, consts: [["color", "primary"], ["fxFlex", "", "fxLayout", "", "fxLayoutAlign", "left", "fxHide.xs", ""], ["mat-menu-item", ""], [1, "icon"], [1, "label"], ["color", "accent"], ["label", "Search"], ["label", "Resource"], ["label", "About author"]], template: function AppComponent_Template(rf, ctx) {
   if (rf & 1) {
     \u0275\u0275elementStart(0, "mat-sidenav-container")(1, "mat-sidenav-content")(2, "mat-toolbar", 0)(3, "div", 1)(4, "a", 2)(5, "mat-icon", 3);
     \u0275\u0275text(6, "note_add");
