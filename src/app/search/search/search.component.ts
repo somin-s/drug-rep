@@ -5,6 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Compound } from '../../models/compound';
 
+import { catchError, throwError } from 'rxjs';
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -18,10 +20,8 @@ export class SearchComponent {
     image: string = "";
     standardInchiKey: any = [];
     uci: any = [];
-
   
     constructor(private service: ServiceService) { }
-
   
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -36,31 +36,38 @@ export class SearchComponent {
       this.refreshList();    
     }
     refreshList() {
-      this.service.getCompound(this.searchCompound).subscribe(data=>{
-        console.log(data);
-        const values = Object.values(data);
-        const compound = Object.values(values[0]);
-        const compoundDetail = Object.values(compound[0]);
+        this.service.getCompound(this.searchCompound).subscribe(
+        data=>{
+          const values = Object.values(data);
+          if (values.length == 2) {this.alarmMsg();}
+          const compound = Object.values(values[0]);
+          const compoundDetail = Object.values(compound[0]);
+          
+          const sources = compoundDetail[1];
+          this.standardInchiKey = compoundDetail[2];
+          this.uci = compoundDetail[3];
+          this.getImage(this.uci);
+          console.log(sources);
 
-        const sources = compoundDetail[1];
-        this.standardInchiKey = compoundDetail[2];
-        this.uci = compoundDetail[3];
-        this.getImage(this.uci);
-        console.log(sources);
-
-        this.dataSource = sources;
-        //this.standardInchiKey = standardInchiKey;
-        //this.dataSource = new MatTableDataSource(sources);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      })
+          this.dataSource = sources;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        })
     }
     getImage(Urluci: string) {
       this.image = "https://www.ebi.ac.uk/unichem/api/v1/images/"+Urluci;
     }
 
+    alarmMsg() {
+      alert("You might input wrong UCI number")
+    }
+
     onSearch() {
-      
+      if ((<HTMLInputElement>document.getElementById('compound')).value != ""){
+          this.searchCompound['compound'] = (<HTMLInputElement>document.getElementById('compound')).value;
+          this.refreshList();
+      }
+      else this.alarmMsg(); 
     }
 
     onClick(url: string) {

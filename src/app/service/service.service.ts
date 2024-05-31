@@ -14,34 +14,13 @@ import { CompoutOutput } from '../models/compound';
 })
 export class ServiceService {
 
-  // const headers= new HttpHeaders().set('content-type', 'application/json')
-  // .set('Access-Control-Allow-Origin', '*')
-  // .set('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS')
-  // .set('Access-Control-Allow-Headers','Origin, Content-Type, X-Auth-Token');
-
-  //readonly APIUrl: string | undefined;
-  //private APIUrl = environment.APIUrl
   constructor(private http: HttpClient) { }
 
-  //#region for Metadata
-  // getMetadata(): Observable<Metadata[]> {
-  //   const headers= new HttpHeaders().set('content-type', 'application/json')
-  //   .set('Access-Control-Allow-Origin', '*')
-  //   .set('Access-Control-Allow-Methods','GET, POST, PATCH, PUT, DELETE, OPTIONS')
-  //   .set('Access-Control-Allow-Headers','Origin, Content-Type, X-Auth-Token');
-  //   return this.http.get<Metadata[]>(this.APIUrl+'Members',{headers: headers, withCredentials: true})
-  // }
-
   getCompound(compound: Compound): Observable<CompoutOutput[]> {
-    return this.http.post<CompoutOutput[]>('https://www.ebi.ac.uk/unichem/api/v1/compounds',compound);
+      return this.http.post<CompoutOutput[]>('https://www.ebi.ac.uk/unichem/api/v1/compounds',compound)
   } 
 
   getSources(): Observable<all_Source[]> {
     return this.http.get<all_Source[]>('https://www.ebi.ac.uk/unichem/api/v1/sources/');
   } 
-  
-  //getImage(uci: string){
-  //   return this.http.get('https://www.ebi.ac.uk/unichem/api/v1/sources/');
-  //} 
-
 }
