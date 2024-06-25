@@ -4,7 +4,6 @@ import { ServiceService } from '../../service/service.service';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { Compound } from '../../models/compound';
-
 import { catchError, throwError } from 'rxjs';
 
 @Component({
@@ -36,18 +35,17 @@ export class SearchComponent {
       this.refreshList();    
     }
     refreshList() {
-        this.service.getCompound(this.searchCompound).subscribe(
-        data=>{
+        this.service.getCompound(this.searchCompound).subscribe(data=>{
           const values = Object.values(data);
           if (values.length == 2) {this.alarmMsg();}
           const compound = Object.values(values[0]);
           const compoundDetail = Object.values(compound[0]);
+          console.log(compoundDetail[1])
           
           const sources = compoundDetail[1];
           this.standardInchiKey = compoundDetail[2];
           this.uci = compoundDetail[3];
           this.getImage(this.uci);
-          console.log(sources);
 
           this.dataSource = sources;
           this.dataSource.paginator = this.paginator;

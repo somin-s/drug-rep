@@ -1,4 +1,4 @@
-mat-sidenav-container, mat-sidenav-content, mat-sidenav {
+/* mat-sidenav-container, mat-sidenav-content, mat-sidenav {
     height: 100%;
   }
   
@@ -41,10 +41,22 @@ mat-sidenav-container, mat-sidenav-content, mat-sidenav {
     vertical-align: middle;
     width: 15%;
   }
-  
+   */
   .label {
     display: inline-block;
+    font-size: 30px;
     line-height: 30px;
     margin: 0;
     width: 85%;
+    color: brown;
+  }
+
+  mat-toolbar {
+    height: 120px;
+    /* background: linear-gradient(lightgray,white); */
+    background-image: url(../assets/img/background.png);
+    background-size: cover;
+  }
+  .black-toolba{
+    background-image: url(../assets/img/background.png);
   }

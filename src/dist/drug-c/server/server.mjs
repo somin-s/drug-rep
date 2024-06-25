@@ -1,7 +1,7 @@
 import './polyfills.server.mjs';
 import {
   AppServerModule
-} from "./chunk-J57U3RT2.mjs";
+} from "./chunk-SBFWMQES.mjs";
 import {
   APP_BASE_HREF,
   SERVER_CONTEXT,

@@ -17,4 +17,12 @@
 .container>*{
     flex: 1 1 300px;
 }
-
+.custom_button {
+    /* padding: 10px; */
+    margin: 10px;
+    height: 50px;
+    background: linear-gradient(lightgray,white, lightgray);
+}
+mat-form-field{
+    padding: 10px;
+}
